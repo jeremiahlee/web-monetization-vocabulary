@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Web Monetization Vocabulary</title>
+	<script src="https://www.w3.org/Tools/respec/respec-w3c" async class="remove"></script>
+	<!-- <script src="./respec-w3c.js" async class="remove"></script> -->
+	<script class="remove">
+		// All config options at https://respec.org/docs/
+		var respecConfig = {
+			edDraftURI: "https://webmonetization.org/vocabulary-TODO/",
+			publishDate: "2023-08-03",
+			github: {
+				repoURL: "wicg/webmonetization",
+				branch: "main",
+			},
+			// group: "wicg",
+			specStatus: "unofficial",
+			latestVersion: null,
+			noRecTrack: true,
+			isPreview: true,
+			editors: [{
+				name: "Jeremiah Lee",
+				email: "jeremiah@interledger.foundation",
+	            company: "Interledger Foundation",
+            	companyURL: "https://interledger.org/"
+			}],
+			localBiblio: {
+				webmonetization: {
+					title: "Web Monetization",
+					href: "https://webmonetization.org/specification/",
+					status: "CG-DRAFT",
+					publisher: "WICG",
+				}
+			},
+			doJsonLd: true
+		};
+	</script>
+</head>
+<body>
+	<h1 id="title">Web Monetization Vocabulary</h1>
+
+	<section id="abstract">
+		<p>This specification describes the Web Monetization vocabulary. It is intended to be used in the context of the [[[activitystreams-vocabulary]]].</p>
+	</section>
+
+	<section id="sotd" class="updateable-rec">
+		<div class="warning">
+			<p>This specification is a work in progress within the community on the best shape it should take.</p>
+			<p>The specification reflects the desired end-state as currently anticipated and agreed to between the contributors. The specification is being prepared here, in this format, to collect the input of the Web community and prepare the work to ultimately follow the W3C standards track should it have the necessary support to do so.</p>
+		</div>
+		<p>Comments regarding this document are welcome. <a href="https://github.com/wicg/webmonetization/issues/">GitHub Issues</a> are preferred for discussion of this specification.</p>
+	</section>
+
+	<section>
+		<h2>Introduction</h2>
+		<p>This document defines how to include a <a href="https://webmonetization.org/specification/#dfn-payment-pointer">payment pointer</a> in the <a data-cite="activitystreams-vocabulary#dfn-activity">Activity</a> and <a data-cite="activitystreams-vocabulary#dfn-actor">Actor</a> types in the [[[activitystreams-vocabulary]]]. [[[activitypub]]] servers and clients MAY use this vocabulary for facilitating payments with a user’s [[[webmonetization]]] provider.</p>
+
+			<!-- how [[[activitypub]]] clients can support [[[webmonetization]]] by including a  with <a data-cite="activitystreams-vocabulary#dfn-activity">Activity</a> and <a data-cite="activitystreams-vocabulary#dfn-actor">Actor</a> types in .</p> -->
+
+		<section>
+			<h3>Conventions</h3>
+			<p>Following the convention of the <a data-cite="activitystreams-vocabulary#properties">Activity Vocabulary</a>, the "Domain" indicates the type of Object the property term applies to. The "Range" indicates the type of value the property term can have. Properties marked as being "Functional" can have only one value. Items not marked as "Functional" can have multiple values.</p>
+		</section>
+	</section>
+
+	<section>
+		<h2>PaymentPointer Type</h2>
+
+		<p><a href="https://webmonetization.org/specification/#dfn-payment-pointer">Payment pointers</a> are a standardized identifier for payment accounts. A <a>PaymentPointer</a> MUST be represented in its resolved syntax as an IRI [[RFC3987]].</p>
+
+		<table class="def">
+			<thead>
+				<tr>
+					<th>Class</th>
+					<th colspan="2">Description</th>
+					<th>Example</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td rowspan="4"><dfn data-dfn-type="dfn" id="dfn-paymentpointer">PaymentPointer</dfn></td>
+					<td>URI:</td>
+					<td><code class="http">https://webmonetization.org/ns#PaymentPointer</code></td>
+					<td rowspan="4"><aside class="example">
+						<pre class="json">{
+  "@context": "https://webmonetization.org/ns#",
+  "type": "PaymentPointer",
+  "href": "https://wallet.example.com/mary"
+}</pre>
+					</aside></td>
+				</tr>
+				<tr>
+					<td>Notes:</td>
+					<td>
+						<p>A <code>PaymentPointer</code> is a subtype of <a data-cite="activitystreams-vocabulary#dfn-link">Link</a> that references an Open Payments API entry point identified by a URL.</p>
+						<p>The <a data-cite="activitystreams-vocabulary#dfn-rel"><code>rel</code></a> property is set to <code>monetization</code> and <a data-cite="activitystreams-vocabulary#dfn-mediatype"><code>mediaType</code></a> property set to <code>application/json</code>.</p>
+						<p>The <a data-cite="activitystreams-vocabulary#dfn-name"><code>name</code></a>, <a data-cite="activitystreams-vocabulary#dfn-hreflang"><code>hreflang</code></a>, <a data-cite="activitystreams-vocabulary#dfn-height"><code>height</code></a>, <a data-cite="activitystreams-vocabulary#dfn-width"><code>width</code></a>, <a data-cite="activitystreams-vocabulary#dfn-preview"><code>preview</code></a> properties are inappropriate for this resource.</p>
+					</td>
+				</tr>
+				<tr>
+					<td>Extends:</td>
+					<td><a data-cite="activitystreams-vocabulary#dfn-link">Link</a></td>
+				</tr>
+				<tr>
+					<td>Properties:</td>
+					<td>Inherits <a data-cite="activitystreams-vocabulary#dfn-href"><code>href</code></a> from <a data-cite="activitystreams-vocabulary#dfn-link">Link</a>.</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+
+	<section>
+		<h2>Monetization Property</h2>
+
+		<p>The <a>monetization</a> property associates a <a>PaymentPointer</a> with a creator or a piece of content. It is analogous to using the <a href="https://webmonetization.org/specification/#link-type-monetization"><code>link</code> type <code>monetization</code></a> for including payment pointers in HTML documents.</p>
+
+		<table class="def">
+			<thead>
+				<tr>
+					<th>Term</th>
+					<th colspan="2">Description</th>
+					<th>Examples</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td rowspan="5"><dfn data-dfn-type="dfn" id="dfn-monetization">monetization</dfn></td>
+					<td>URI:</td>
+					<td><code>https://webmonetization.org/ns#</code></td>
+					<td rowspan="5">
+						<aside class="example" title="Publishing a Note">
+							<pre class="json">{
+  "@context": {
+    "@vocab": "https://www.w3.org/ns/activitystreams#",
+    "monetization": "https://webmonetization.org/ns#monetization",
+    "@language": "en"
+  },
+  "id": "https://example.com/create-hello-world",
+  "type": "Create",
+  "actor": "https://example.com/@mary",
+  "object": {
+    "id": "https://example.com/hello-world",
+    "type": "Note",
+    "published": "2023-05-10T13:37:00Z",
+    "attributedTo": "https://example.com/@mary",
+    "content": "&lt;p&gt;Hello world&lt;/p&gt;",
+    "to": "https://www.w3.org/ns/activitystreams#Public",
+    "monetization": "https://wallet.example.com/mary"
+  }
+}</pre>
+						</aside>
+
+						<aside class="example" title="A user profile">
+							<pre class="json">{
+  "@context": {
+    "@vocab": "https://www.w3.org/ns/activitystreams#",
+    "monetization": "https://webmonetization.org/ns#monetization"
+  },
+  "type": "Person",
+  "name": "Mary Lee",
+  "monetization": "https://wallet.example.com/mary"
+}</pre>
+						</aside>
+					</td>
+				</tr>
+				<tr>
+					<td>Notes:</td>
+					<td>Defines the intended recipient of a payment. The property MUST only have one value.</p></td>
+				</tr>
+				<tr>
+					<td>Domain:</td>
+					<td><a data-cite="activitystreams-vocabulary#dfn-activity"><code>Activity</code></a> | <a data-cite="activitystreams-vocabulary#dfn-actor"><code>Actor</code></a></td>
+				</tr>
+				<tr>
+					<td>Range:</td>
+					<td><a><code>PaymentPointer</code></a></td>
+				</tr>
+				<tr>
+					<td>Functional:</td>
+					<td>True</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+
+	<section id="conformance">
+		<!-- This section is filled automatically by ReSpec. -->
+	</section>
+</body>
+
+</html>
